@@ -3,15 +3,26 @@ import vision from "@google-cloud/vision";
 import sharp from "sharp";
 import employees from "@/data/employee.json";
 import fs from "fs";
+// import vision from "@google-cloud/vision";
+// import fs from "fs";
 
-// ✅ Debug (optional - remove later)
-console.log(
-  "VISION FILE EXISTS:",
-  fs.existsSync("/etc/secrets/vision.json")
-);
+const credentialsPath = "/etc/secrets/vision.json";
 
-// ✅ Use ONLY default Google auth (Render will pick credentials file automatically)
-const client = new vision.ImageAnnotatorClient();
+if (!fs.existsSync(credentialsPath)) {
+  throw new Error("Vision credentials file not found on server");
+}
+
+const client = new vision.ImageAnnotatorClient({
+  keyFilename: credentialsPath,
+});
+// // ✅ Debug (optional - remove later)
+// console.log(
+//   "VISION FILE EXISTS:",
+//   fs.existsSync("/etc/secrets/vision.json")
+// );
+
+// // ✅ Use ONLY default Google auth (Render will pick credentials file automatically)
+// const client = new vision.ImageAnnotatorClient();
 
 function cleanOCRText(text) {
   return text
