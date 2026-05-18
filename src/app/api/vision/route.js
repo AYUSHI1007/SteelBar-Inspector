@@ -3,11 +3,25 @@ import vision from "@google-cloud/vision";
 import sharp from "sharp";
 import employees from "@/data/employee.json";
 
-const client = new vision.ImageAnnotatorClient({
-  credentials: JSON.parse(
-    process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-  ),
-});
+// ✅ Safe JSON parsing
+let credentials = null;
+
+try {
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+    credentials = JSON.parse(
+      process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+    );
+  } else {
+    console.error("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON");
+  }
+} catch (err) {
+  console.error("Invalid JSON in credentials env variable", err);
+}
+
+// ✅ Vision client (safe fallback)
+const client = new vision.ImageAnnotatorClient(
+  credentials ? { credentials } : undefined
+);
 
 function cleanOCRText(text) {
   return text
@@ -18,7 +32,6 @@ function cleanOCRText(text) {
 
 function parseAttendance(text) {
   const lines = text.split("\n");
-
   let result = [];
 
   for (let i = 0; i < lines.length; i++) {
@@ -29,7 +42,9 @@ function parseAttendance(text) {
       line.includes("Employee") ||
       line.includes("Month") ||
       line.includes("WAGE")
-    ) continue;
+    ) {
+      continue;
+    }
 
     const nameMatch = line.match(/[A-Z][a-z]+ [A-Z][a-z]+/);
 
@@ -46,6 +61,7 @@ function parseAttendance(text) {
       const presentCount = totalDays - absentCount;
 
       const employee = employees.find(emp => emp.name === name);
+
       const dailyWage = employee?.dailyWage || 500;
       const totalSalary = presentCount * dailyWage;
 
@@ -59,8 +75,6 @@ function parseAttendance(text) {
         qualification: employee?.qualification,
         experience: employee?.experience,
       });
-
-      return result;
     }
   }
 
@@ -69,6 +83,10 @@ function parseAttendance(text) {
 
 export async function POST(req) {
   try {
+    if (!credentials) {
+      throw new Error("Google Vision credentials missing or invalid");
+    }
+
     const { image } = await req.json();
 
     const originalBuffer = Buffer.from(image, "base64");
@@ -84,7 +102,7 @@ export async function POST(req) {
       image: { content: buffer },
     });
 
-    const rawText = result.fullTextAnnotation?.text || "";
+    const rawText = result?.fullTextAnnotation?.text || "";
 
     return NextResponse.json({
       success: true,
@@ -94,11 +112,11 @@ export async function POST(req) {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("VISION ERROR:", error);
 
     return NextResponse.json({
       success: false,
-      error: error.message,
+      error: error?.message || "Unknown error occurred",
     });
   }
 }
