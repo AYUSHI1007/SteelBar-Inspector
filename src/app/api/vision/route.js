@@ -4,26 +4,14 @@ import sharp from "sharp";
 import employees from "@/data/employee.json";
 import fs from "fs";
 
-console.log("FILE EXISTS:", fs.existsSync("/etc/secrets/vision.json"));
-// ✅ Safe JSON parsing
-let credentials = null;
-
-try {
-  if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
-    credentials = JSON.parse(
-      process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-    );
-  } else {
-    console.error("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON");
-  }
-} catch (err) {
-  console.error("Invalid JSON in credentials env variable", err);
-}
-
-// ✅ Vision client (safe fallback)
-const client = new vision.ImageAnnotatorClient(
-  credentials ? { credentials } : undefined
+// ✅ Debug (optional - remove later)
+console.log(
+  "VISION FILE EXISTS:",
+  fs.existsSync("/etc/secrets/vision.json")
 );
+
+// ✅ Use ONLY default Google auth (Render will pick credentials file automatically)
+const client = new vision.ImageAnnotatorClient();
 
 function cleanOCRText(text) {
   return text
@@ -85,11 +73,14 @@ function parseAttendance(text) {
 
 export async function POST(req) {
   try {
-    if (!credentials) {
-      throw new Error("Google Vision credentials missing or invalid");
-    }
-
     const { image } = await req.json();
+
+    if (!image) {
+      return NextResponse.json({
+        success: false,
+        error: "No image provided",
+      });
+    }
 
     const originalBuffer = Buffer.from(image, "base64");
 
@@ -118,7 +109,7 @@ export async function POST(req) {
 
     return NextResponse.json({
       success: false,
-      error: error?.message || "Unknown error occurred",
+      error: error?.message || "Vision API failed",
     });
   }
 }
