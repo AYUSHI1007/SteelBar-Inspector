@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import vision from "@google-cloud/vision";
 import sharp from "sharp";
 import employees from "@/data/employee.json";
+import fs from "fs";
 
+console.log("FILE EXISTS:", fs.existsSync("/etc/secrets/vision.json"));
 // ✅ Safe JSON parsing
 let credentials = null;
 
