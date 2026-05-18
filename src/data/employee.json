@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "name": "Ramesh Kumar",
+    "qualification": "ITI",
+    "experience": 5,
+    "department": "Rolling",
+    "dailyWage": 700
+  },
+  {
+    "id": 2,
+    "name": "Amit Singh",
+    "qualification": "Diploma",
+    "experience": 3,
+    "department": "Inspection",
+    "dailyWage": 650
+  },
+  {
+    "id": 3,
+    "name": "Rahul Verma",
+    "qualification": "BTech",
+    "experience": 2,
+    "department": "Maintenance",
+    "dailyWage": 850
+  },
+  {
+    "id": 4,
+    "name": "Suresh Yadav",
+    "qualification": "12th Pass",
+    "experience": 7,
+    "department": "Loading",
+    "dailyWage": 500
+  },
+  {
+    "id": 5,
+    "name": "Vikas Sharma",
+    "qualification": "Diploma",
+    "experience": 6,
+    "department": "Rolling",
+    "dailyWage": 750
+  },
+  {
+    "id": 6,
+    "name": "Deepak Mishra",
+    "qualification": "ITI",
+    "experience": 4,
+    "department": "Inspection",
+    "dailyWage": 620
+  },
+  {
+    "id": 7,
+    "name": "Rohit Sharma",
+    "qualification": "BTech",
+    "experience": 1,
+    "department": "Production",
+    "dailyWage": 900
+  },
+  {
+    "id": 8,
+    "name": "Ankit Patel",
+    "qualification": "Diploma",
+    "experience": 8,
+    "department": "Maintenance",
+    "dailyWage": 800
+  },
+  {
+    "id": 9,
+    "name": "Manoj Tiwari",
+    "qualification": "ITI",
+    "experience": 9,
+    "department": "Rolling",
+    "dailyWage": 780
+  },
+  {
+    "id": 10,
+    "name": "Sunil Kumar",
+    "qualification": "12th Pass",
+    "experience": 10,
+    "department": "Loading",
+    "dailyWage": 550
+  },
+  {
+    "id": 11,
+    "name": "Pankaj Verma",
+    "qualification": "Diploma",
+    "experience": 4,
+    "department": "Inspection",
+    "dailyWage": 680
+  },
+  {
+    "id": 12,
+    "name": "Ajay Singh",
+    "qualification": "ITI",
+    "experience": 6,
+    "department": "Production",
+    "dailyWage": 720
+  },
+  {
+    "id": 13,
+    "name": "Nitin Yadav",
+    "qualification": "BTech",
+    "experience": 3,
+    "department": "Automation",
+    "dailyWage": 950
+  },
+  {
+    "id": 14,
+    "name": "Karan Mehta",
+    "qualification": "Diploma",
+    "experience": 2,
+    "department": "Maintenance",
+    "dailyWage": 600
+  },
+  {
+    "id": 15,
+    "name": "Abhishek Sharma",
+    "qualification": "ITI",
+    "experience": 7,
+    "department": "Rolling",
+    "dailyWage": 770
+  },
+  {
+    "id": 16,
+    "name": "Vivek Kumar",
+    "qualification": "12th Pass",
+    "experience": 5,
+    "department": "Loading",
+    "dailyWage": 520
+  },
+  {
+    "id": 17,
+    "name": "Arjun Patel",
+    "qualification": "Diploma",
+    "experience": 9,
+    "department": "Inspection",
+    "dailyWage": 830
+  },
+  {
+    "id": 18,
+    "name": "Mohit Verma",
+    "qualification": "BTech",
+    "experience": 4,
+    "department": "Automation",
+    "dailyWage": 980
+  },
+  {
+    "id": 19,
+    "name": "Sanjay Kumar",
+    "qualification": "ITI",
+    "experience": 11,
+    "department": "Production",
+    "dailyWage": 810
+  },
+  {
+    "id": 20,
+    "name": "Gaurav Singh",
+    "qualification": "Diploma",
+    "experience": 5,
+    "department": "Rolling",
+    "dailyWage": 740
+  },
+  {
+    "id": 21,
+    "name": "Harish Yadav",
+    "qualification": "12th Pass",
+    "experience": 8,
+    "department": "Loading",
+    "dailyWage": 560
+  },
+  {
+    "id": 22,
+    "name": "Prakash Mishra",
+    "qualification": "ITI",
+    "experience": 6,
+    "department": "Inspection",
+    "dailyWage": 700
+  },
+  {
+    "id": 23,
+    "name": "Neeraj Sharma",
+    "qualification": "BTech",
+    "experience": 2,
+    "department": "Automation",
+    "dailyWage": 920
+  },
+  {
+    "id": 24,
+    "name": "Lokesh Gupta",
+    "qualification": "Diploma",
+    "experience": 7,
+    "department": "Maintenance",
+    "dailyWage": 790
+  },
+  {
+    "id": 25,
+    "name": "Ashish Kumar",
+    "qualification": "ITI",
+    "experience": 5,
+    "department": "Rolling",
+    "dailyWage": 710
+  },
+  {
+    "id": 26,
+    "name": "Ravi Patel",
+    "qualification": "Diploma",
+    "experience": 1,
+    "department": "Production",
+    "dailyWage": 580
+  },
+  {
+    "id": 27,
+    "name": "Dinesh Verma",
+    "qualification": "12th Pass",
+    "experience": 12,
+    "department": "Loading",
+    "dailyWage": 600
+  },
+  {
+    "id": 28,
+    "name": "Yash Sharma",
+    "qualification": "BTech",
+    "experience": 5,
+    "department": "Automation",
+    "dailyWage": 1050
+  },
+  {
+    "id": 29,
+    "name": "Tarun Singh",
+    "qualification": "Diploma",
+    "experience": 4,
+    "department": "Inspection",
+    "dailyWage": 690
+  },
+  {
+    "id": 30,
+    "name": "Kishore Yadav",
+    "qualification": "ITI",
+    "experience": 10,
+    "department": "Maintenance",
+    "dailyWage": 820
+  },
+  {
+    "id": 31,
+    "name": "Aakash Kumar",
+    "qualification": "BTech",
+    "experience": 3,
+    "department": "Production",
+    "dailyWage": 930
+  },
+  {
+    "id": 32,
+    "name": "Hemant Patel",
+    "qualification": "Diploma",
+    "experience": 6,
+    "department": "Rolling",
+    "dailyWage": 760
+  },
+  {
+    "id": 33,
+    "name": "Naveen Mishra",
+    "qualification": "ITI",
+    "experience": 7,
+    "department": "Inspection",
+    "dailyWage": 730
+  },
+  {
+    "id": 34,
+    "name": "Rajesh Verma",
+    "qualification": "12th Pass",
+    "experience": 9,
+    "department": "Loading",
+    "dailyWage": 570
+  },
+  {
+    "id": 35,
+    "name": "Piyush Sharma",
+    "qualification": "BTech",
+    "experience": 6,
+    "department": "Automation",
+    "dailyWage": 1100
+  },
+  {
+    "id": 36,
+    "name": "Alok Singh",
+    "qualification": "Diploma",
+    "experience": 5,
+    "department": "Maintenance",
+    "dailyWage": 740
+  },
+  {
+    "id": 37,
+    "name": "Sachin Kumar",
+    "qualification": "ITI",
+    "experience": 8,
+    "department": "Rolling",
+    "dailyWage": 790
+  },
+  {
+    "id": 38,
+    "name": "Vinay Patel",
+    "qualification": "Diploma",
+    "experience": 2,
+    "department": "Production",
+    "dailyWage": 610
+  },
+  {
+    "id": 39,
+    "name": "Jitendra Yadav",
+    "qualification": "12th Pass",
+    "experience": 11,
+    "department": "Loading",
+    "dailyWage": 590
+  },
+  {
+    "id": 40,
+    "name": "Aditya Verma",
+    "qualification": "BTech",
+    "experience": 4,
+    "department": "Automation",
+    "dailyWage": 990
+  },
+  {
+    "id": 41,
+    "name": "Kapil Sharma",
+    "qualification": "ITI",
+    "experience": 6,
+    "department": "Inspection",
+    "dailyWage": 720
+  },
+  {
+    "id": 42,
+    "name": "Shubham Singh",
+    "qualification": "Diploma",
+    "experience": 7,
+    "department": "Rolling",
+    "dailyWage": 780
+  },
+  {
+    "id": 43,
+    "name": "Anurag Kumar",
+    "qualification": "BTech",
+    "experience": 1,
+    "department": "Production",
+    "dailyWage": 880
+  },
+  {
+    "id": 44,
+    "name": "Kunal Patel",
+    "qualification": "Diploma",
+    "experience": 9,
+    "department": "Maintenance",
+    "dailyWage": 840
+  },
+  {
+    "id": 45,
+    "name": "Mukesh Yadav",
+    "qualification": "ITI",
+    "experience": 10,
+    "department": "Inspection",
+    "dailyWage": 800
+  },
+  {
+    "id": 46,
+    "name": "Rajat Sharma",
+    "qualification": "12th Pass",
+    "experience": 4,
+    "department": "Loading",
+    "dailyWage": 480
+  },
+  {
+    "id": 47,
+    "name": "Sameer Verma",
+    "qualification": "BTech",
+    "experience": 7,
+    "department": "Automation",
+    "dailyWage": 1150
+  },
+  {
+    "id": 48,
+    "name": "Praveen Kumar",
+    "qualification": "Diploma",
+    "experience": 3,
+    "department": "Rolling",
+    "dailyWage": 670
+  },
+  {
+    "id": 49,
+    "name": "Devendra Singh",
+    "qualification": "ITI",
+    "experience": 5,
+    "department": "Production",
+    "dailyWage": 710
+  },
+  {
+    "id": 50,
+    "name": "Naresh Mishra",
+    "qualification": "12th Pass",
+    "experience": 13,
+    "department": "Loading",
+    "dailyWage": 620
+  }
+]
