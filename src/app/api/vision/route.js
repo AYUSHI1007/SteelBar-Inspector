@@ -1,28 +1,8 @@
 import { NextResponse } from "next/server";
-import vision from "@google-cloud/vision";
 import sharp from "sharp";
 import employees from "@/data/employee.json";
-import fs from "fs";
-// import vision from "@google-cloud/vision";
-// import fs from "fs";
 
-const credentialsPath = "/etc/secrets/vision.json";
-
-if (!fs.existsSync(credentialsPath)) {
-  throw new Error("Vision credentials file not found on server");
-}
-
-const client = new vision.ImageAnnotatorClient({
-  keyFilename: credentialsPath,
-});
-// // ✅ Debug (optional - remove later)
-// console.log(
-//   "VISION FILE EXISTS:",
-//   fs.existsSync("/etc/secrets/vision.json")
-// );
-
-// // ✅ Use ONLY default Google auth (Render will pick credentials file automatically)
-// const client = new vision.ImageAnnotatorClient();
+export const runtime = "nodejs";
 
 function cleanOCRText(text) {
   return text
@@ -32,39 +12,72 @@ function cleanOCRText(text) {
 }
 
 function parseAttendance(text) {
+
   const lines = text.split("\n");
+
   let result = [];
 
   for (let i = 0; i < lines.length; i++) {
+
     const line = lines[i].trim();
 
     if (
       line.includes("Total Days") ||
       line.includes("Employee") ||
       line.includes("Month") ||
-      line.includes("WAGE")
+      line.includes("WAGE") ||
+      line.includes("DAY")
     ) {
       continue;
     }
 
-    const nameMatch = line.match(/[A-Z][a-z]+ [A-Z][a-z]+/);
-
+    const nameMatch =
+      line.match(
+        /([A-Z][a-z]+)\s([A-Z][a-z]+)/
+      );
+    if (
+      !nameMatch ||
+      line.includes("BOOK") ||
+      line.includes("Days") ||
+      line.includes("Month")
+    ) {
+      continue;
+    }
     if (nameMatch) {
-      const name = nameMatch[0];
+
+      const name =
+        `${nameMatch[1]} ${nameMatch[2]}`;
+
       let combinedText = "";
 
-      for (let j = i; j < i + 20 && j < lines.length; j++) {
+      for (
+        let j = i;
+        j < i + 20 && j < lines.length;
+        j++
+      ) {
         combinedText += lines[j];
       }
 
-      const absentCount = (combinedText.match(/x/gi) || []).length;
-      const totalDays = 30;
-      const presentCount = totalDays - absentCount;
+      const absentCount =
+        (combinedText.match(/x/gi) || []).length;
 
-      const employee = employees.find(emp => emp.name === name);
+      const totalDays =
+        text.includes("29 30 31") ? 31 : 30;
 
-      const dailyWage = employee?.dailyWage || 500;
-      const totalSalary = presentCount * dailyWage;
+      const presentCount =
+        totalDays - absentCount;
+
+      const employee = employees.find(
+        (emp) =>
+          emp.name.toLowerCase() ===
+          name.toLowerCase()
+      );
+
+      const dailyWage =
+        employee?.dailyWage || 500;
+
+      const totalSalary =
+        presentCount * dailyWage;
 
       result.push({
         name,
@@ -72,10 +85,15 @@ function parseAttendance(text) {
         absent: absentCount,
         dailyWage,
         totalSalary,
-        department: employee?.department,
-        qualification: employee?.qualification,
-        experience: employee?.experience,
+        department:
+          employee?.department || "N/A",
+        qualification:
+          employee?.qualification || "N/A",
+        experience:
+          employee?.experience || "N/A",
       });
+
+      break;
     }
   }
 
@@ -83,30 +101,57 @@ function parseAttendance(text) {
 }
 
 export async function POST(req) {
+
   try {
+
     const { image } = await req.json();
 
-    if (!image) {
-      return NextResponse.json({
-        success: false,
-        error: "No image provided",
-      });
-    }
+    const base64Data =
+      image.replace(
+        /^data:image\/\w+;base64,/,
+        ""
+      );
 
-    const originalBuffer = Buffer.from(image, "base64");
+    const originalBuffer =
+      Buffer.from(base64Data, "base64");
 
     const buffer = await sharp(originalBuffer)
-      .grayscale()
-      .normalize()
-      .sharpen()
-      .png()
-      .toBuffer();
+  .resize(2200)
+  .grayscale()
+  .normalise()
+  .sharpen({
+    sigma: 2,
+    m1: 1,
+    m2: 2,
+  })
+  .threshold(150)
+  .png()
+  .toBuffer();
 
-    const [result] = await client.textDetection({
-      image: { content: buffer },
-    });
+    const formData = new FormData();
 
-    const rawText = result?.fullTextAnnotation?.text || "";
+    formData.append(
+      "base64Image",
+      `data:image/jpeg;base64,${buffer.toString("base64")}`
+    );
+
+    formData.append("language", "eng");
+formData.append("apikey", "helloworld");
+formData.append("OCREngine", "2");
+formData.append("scale", "true");
+formData.append("isTable", "true");
+    const response = await fetch(
+      "https://api.ocr.space/parse/image",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await response.json();
+
+    const rawText =
+      data?.ParsedResults?.[0]?.ParsedText || "";
 
     return NextResponse.json({
       success: true,
@@ -116,11 +161,12 @@ export async function POST(req) {
     });
 
   } catch (error) {
-    console.error("VISION ERROR:", error);
+
+    console.log(error);
 
     return NextResponse.json({
       success: false,
-      error: error?.message || "Vision API failed",
+      error: String(error),
     });
   }
 }
